@@ -22,6 +22,7 @@ create table product(
                         price int,
                         quantity int,
                         idCategory int,
+                        img longblob,
                         foreign key (idCategory) references category(id)
 );
 create table orderDetail(
