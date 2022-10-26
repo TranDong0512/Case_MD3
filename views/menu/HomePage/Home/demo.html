@@ -9,23 +9,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <style>
         .nav-item {
-            text-decoration: none;
-            color: black;
-            font-weight: 600;
+            display: block;
+            padding: 0 15px;
             text-transform: uppercase;
-            margin-right: 15px;
-            transition: all 0.4s;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+            position: relative;
         }
 
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+        .nav-item:after {
+            content: "";
+            background: tomato;
+            position: absolute;
+            height: 5px;
+            width: 0;
+            bottom: 0;
+            left: 0;
+            transition: all 0.5s ease-in-out;
         }
-
-        .nav-item a:hover {
-            color: rgb(20, 219, 20);
-
+        .nav-item:hover::after{
+            width: 50%;
+            transform: translatex(50%);
         }
 
         .img-cofe {
@@ -78,18 +83,15 @@
         .product:hover {
             color: rgb(20, 219, 20);
         }
-
-        .btn {
-            background: rgb(84, 254, 84);
+        .btn{
+            background: rgb(14,124,36);
             border: transparent;
+            transition: all 0.4s ease-in-out;
         }
+       .btn:hover .product{
+           display: block;
+       }
 
-        .row {
-            margin-left: auto;
-        }
-        .collapse{
-
-        }
     </style>
 
 </head>
@@ -136,8 +138,8 @@
                     Lựa Chọn Sản Phẩm
                 </button>
                 <ul class="collapse collapse-horizontal" id="collapseWidthExample" style="min-height: 24px">
-                    <div class="row" style="margin-left: auto">
-                        <a class="product" href="#category1">
+                    <div class="row">
+                        <a class="product" href="category1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -153,7 +155,7 @@
                     </div>
                     <br>
                     <div class="row ">
-                        <a class="product" href="#category2">
+                        <a class="product" href="category2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -169,7 +171,7 @@
                     </div>
                     <br>
                     <div class="row ">
-                        <a class="product" href="#category3">
+                        <a class="product" href="category3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -185,7 +187,7 @@
                     </div>
                     <br>
                     <div class="row ">
-                        <a class="product" href="#category4">
+                        <a class="product" href="category4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -211,7 +213,7 @@
                 </button>
                 <ul class="collapse collapse-horizontal" id="collapseWidthExample1">
                     <div class="row ">
-                        <a class="product" href="#findByPrice1">
+                        <a class="product" href="findByPrice1">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -227,7 +229,7 @@
                     </div>
                     <br>
                     <div class="row ">
-                        <a class="product" href="#findByPrice2">
+                        <a class="product" href="findByPrice2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -243,7 +245,7 @@
                     </div>
                     <br>
                     <div class="row ">
-                        <a class="product" href="#findByPrice3">
+                        <a class="product" href="findByPrice3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -259,7 +261,7 @@
                     </div>
                     <br>
                     <div class="row ">
-                        <a class="product" href="#findByPrice4">
+                        <a class="product" href="findByPrice4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
                                  width="24"
                                  height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -292,26 +294,25 @@
                         <img src="../IMG/thiet-ke-quan-cafe-nho-dep.jpg" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Không gian thư giãn</h5>
-                            <p><a href="#" class="btn btn-warning mt-3">More Detail</a></p>
+                            <p><a href="#" class="btn3 btn-warning mt-3">More Detail</a></p>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="../IMG/anh-quan-cafe-1.jpg" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="text-dark">Thiết Kế hiện đại</h5>
-                            <p><a href="#" class="btn btn-warning mt-3">More Detail</a></p>
+                            <p><a href="#" class="btn3 btn-warning mt-3">More Detail</a></p>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="../IMG/quan-cafe-banh-o-da-nang-1.jpg" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>Sản Phẩm chất lượng</h5>
-                            <p><a href="#" class="btn btn-warning mt-3">More Detail</a></p>
+                            <p><a href="#" class="btn3 btn-warning mt-3">More Detail</a></p>
                         </div>
                     </div>
                 </div>
-                <button id="previous" class="carousel-control-prev" type="button"
-                        data-bs-target="#carouselExampleCaptions"
+                <button id="previous" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
                         data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -327,7 +328,7 @@
     </div>
 </div>
 <script>
-    const nextGrap = document.getElementById
+
 </script>
 </body>
 </html>
