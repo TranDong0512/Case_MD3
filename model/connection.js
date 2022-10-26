@@ -5,7 +5,7 @@ class Connection {
         host: 'localhost',
         user: 'root',
         password: '12345678',
-        database: 'demoDatabase',
+        database: 'quanlybanhang',
         charset: 'utf8_general_ci'
     });
 
