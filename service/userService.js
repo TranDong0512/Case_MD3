@@ -6,7 +6,7 @@ connection.connecting();
 class UserService {
 
     login(user, res) {
-        connection.connection.query(`SELECT *FROM users`, function (err, results) {
+        connection.connection.query(`SELECT *FROM users`, (err, results) => {
             if (err) {
                 console.log(err);
             } else {
@@ -18,7 +18,8 @@ class UserService {
                     for (let i = 0; i < results.length; i++) {
                         if (user.name === results[i].name && user.password === results[i].password) {
                             check = true;
-                            console.log("user");
+                            res.writeHead(301, {'location': '/user'});
+                            res.end();
                         }
                     }
                     if (!check) {

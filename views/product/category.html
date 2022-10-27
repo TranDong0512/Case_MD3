@@ -9,39 +9,15 @@
 <body>
 <div class="container">
     <div class="col-6">
-        <h2>Product Manager</h2>
+        <h2>List Category</h2>
         <table class="table table-striped">
             <tr>
                 <td>STT</td>
                 <td>Name</td>
-                <td>Price</td>
-                <td>Quantity</td>
-                <td>Thêm vào giỏ hàng</td>
+                <td>Search</td>
             </tr>
-            {products}
+            {category}
         </table>
-
-        <a href="/user/findProductByCategory">
-            <button type="submit">Tìm kiếm theo loại</button>
-        </a>
-
-        <form action="/user/findProductByName" method="post">
-            <input type="text" name="name">
-            <a>
-                <button type="submit">Tìm kiếm theo tên</button>
-            </a>
-        </form>
-
-        <form action="/user/findProductByPrice" method="post">
-            <input type="number" name="price1">
-            <input type="number" name="price2">
-            <a>
-                <button type="submit">Tìm kiếm theo giá</button>
-            </a>
-        </form>
-        <a>
-            <button>Giỏ hàng</button>
-        </a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"

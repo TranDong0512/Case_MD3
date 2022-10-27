@@ -104,21 +104,29 @@
 <body>
 <div class="wrapper">
     <div class="container">
-
-        <div class="login">
-            <a href="/login">Login</a>
-        </div>
-        <div class="signup">
-            <a href="/register">Register</a>
-        </div>
+        <form action="/login" method="get">
+            <div class="login">
+                <input type="submit"
+                       style="font-size: 24px; width: 100%; cursor: pointer"
+                       value="Login">
+            </div>
+        </form>
+        <form action="/register" method="get">
+            <div class="signup">
+                <input type="submit"
+                       style="font-size: 24px; width: 100%; cursor: pointer"
+                       value="Register">
+            </div>
+        </form>
+        {notification}
         <form action="/register" method="post">
-        <div class="signup-form">
-            <input type="text" name="name" required placeholder="Choose a Username" class="input"><br/>
-            <input type="password" name="password" required placeholder="Choose a Password" class="input"><br/>
-            <div class="btn"><input type="submit"
-                                    style="background-color: #34B3A0;border: none; color: white; font-size: 24px; line-height: 60px"
-                                    value="Register"></div>
-        </div>
+            <div class="signup-form">
+                <input type="text" name="name" required placeholder="Choose a Username" class="input"><br/>
+                <input type="password" name="password" required placeholder="Choose a Password" class="input"><br/>
+                <div class="btn"><input type="submit"
+                                        style="background-color: #34B3A0;border: none; color: white; font-size: 24px; line-height: 60px; width: 100%; cursor: pointer"
+                                        value="Register"></div>
+            </div>
         </form>
     </div>
 </div>
