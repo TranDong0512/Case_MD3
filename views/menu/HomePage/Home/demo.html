@@ -7,6 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+            crossorigin="anonymous"></script>
+
     <style>
         .nav-item {
             display: block;
@@ -28,7 +37,8 @@
             left: 0;
             transition: all 0.5s ease-in-out;
         }
-        .nav-item:hover::after{
+
+        .nav-item:hover::after {
             width: 50%;
             transform: translatex(50%);
         }
@@ -83,14 +93,27 @@
         .product:hover {
             color: rgb(20, 219, 20);
         }
-        .btn{
-            background: rgb(14,124,36);
+
+        .btn {
+            background: rgb(14, 124, 36);
             border: transparent;
             transition: all 0.4s ease-in-out;
         }
-       .btn:hover .product{
-           display: block;
-       }
+
+        .btn:hover .product {
+            display: block;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.6)
+        }
+        .mr-8{
+            margin-right: 90px;
+            margin-top: 15px;
+        }
+        .border-img{
+            height: 500px;
+        }
 
     </style>
 
@@ -118,6 +141,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#services">Services</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#addproduct">AddProduct</a>
+                </li>
             </ul>
             <form class="d-flex" role="search">
                 <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
@@ -128,207 +154,349 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="row ">
-        <div class="col-3 ">
-            <div class="dropdown">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseWidthExample" aria-expanded="false"
-                        aria-controls="collapseWidthExample">
-                    Lựa Chọn Sản Phẩm
-                </button>
-                <ul class="collapse collapse-horizontal" id="collapseWidthExample" style="min-height: 24px">
-                    <div class="row">
-                        <a class="product" href="category1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Loại sản phẩm</a>
+<div class="border-img">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <div class="dropdown">
+                    <h5 class="mb-0">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false"
+                                aria-controls="collapseWidthExample">
+                            Lựa Chọn Sản Phẩm
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                    </h5>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion"
+                         style="min-height: 24px">
+                        <div class="row">
+                            <a class="product" href="category1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Loại sản phẩm</a>
+                        </div>
+                        <br>
+                        <div class="row ">
+                            <a class="product" href="category2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Loại sản phẩm </a>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <a class="product" href="category3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Loại sản phẩm</a>
+                        </div>
+                        <br>
+                        <div class="row ">
+                            <a class="product" href="category4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Loại sản phẩm</a>
+                        </div>
                     </div>
-                    <br>
-                    <div class="row ">
-                        <a class="product" href="category2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Loại sản phẩm </a>
-                    </div>
-                    <br>
-                    <div class="row ">
-                        <a class="product" href="category3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Loại sản phẩm</a>
-                    </div>
-                    <br>
-                    <div class="row ">
-                        <a class="product" href="category4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Loại sản phẩm</a>
-                    </div>
-                </ul>
-            </div>
-            <br>
+                </div>
+                <br>
 
-            <div class="dropdown">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseWidthExample1" aria-expanded="false"
-                        aria-controls="collapseWidthExample">
-                    Giá Tiền Mong Muốn
-                </button>
-                <ul class="collapse collapse-horizontal" id="collapseWidthExample1">
-                    <div class="row ">
-                        <a class="product" href="findByPrice1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Giá Tiền</a>
-                    </div>
-                    <br>
-                    <div class="row ">
-                        <a class="product" href="findByPrice2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Giá Tiền </a>
-                    </div>
-                    <br>
-                    <div class="row ">
-                        <a class="product" href="findByPrice3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Giá Tiền</a>
-                    </div>
-                    <br>
-                    <div class="row ">
-                        <a class="product" href="findByPrice4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
-                                 width="24"
-                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                 stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
-                                <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
-                                <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
-                                <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
-                            </svg>
-                            Giá Tiền</a>
-                    </div>
-                </ul>
-            </div>
-            <br>
-        </div>
-        <div class="col-6">
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                            aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../IMG/thiet-ke-quan-cafe-nho-dep.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Không gian thư giãn</h5>
-                            <p><a href="#" class="btn3 btn-warning mt-3">More Detail</a></p>
+                <div class="dropdown">
+                    <h5 class="mb-0">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseWidthExample">
+                            Giá Cả Sản Phẩm
+                            <i class="bi bi-caret-down-fill"></i>
+                        </button>
+                    </h5>
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion"
+                         style="min-height: 24px">
+                        <div class="row ">
+                            <a class="product" href="findByPrice1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Giá Tiền</a>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../IMG/anh-quan-cafe-1.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="text-dark">Thiết Kế hiện đại</h5>
-                            <p><a href="#" class="btn3 btn-warning mt-3">More Detail</a></p>
+                        <br>
+                        <div class="row ">
+                            <a class="product" href="findByPrice2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Giá Tiền </a>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../IMG/quan-cafe-banh-o-da-nang-1.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Sản Phẩm chất lượng</h5>
-                            <p><a href="#" class="btn3 btn-warning mt-3">More Detail</a></p>
+                        <br>
+                        <div class="row ">
+                            <a class="product" href="findByPrice3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Giá Tiền</a>
+                        </div>
+                        <br>
+                        <div class="row ">
+                            <a class="product" href="findByPrice4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coffee"
+                                     width="24"
+                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"></path>
+                                    <path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"></path>
+                                    <path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"></path>
+                                    <path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"></path>
+                                </svg>
+                                Giá Tiền</a>
                         </div>
                     </div>
                 </div>
-                <button id="previous" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button id="next" class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <br>
             </div>
+            <div class="col-8">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="true">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                                class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../IMG/thiet-ke-quan-cafe-nho-dep.jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Không gian thư giãn</h5>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../IMG/anh-quan-cafe-1.jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Thiết Kế hiện đại</h5>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../IMG/quan-cafe-banh-o-da-nang-1.jpg" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Sản Phẩm chất lượng</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="previous" class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button id="next" class="carousel-control-next" type="button"
+                            data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-2"></div>
         </div>
-        <div class="col-3"></div>
     </div>
 </div>
-<script>
 
-</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 mr-8">
+            <div class="card mt-12" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the
+                        card's
+                        content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
 </body>
 </html>
