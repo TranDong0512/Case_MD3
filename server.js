@@ -24,8 +24,7 @@ const server = http.createServer((req, res) => {
         chosenHandler = router[trimPath];
     }
     chosenHandler(req, res, arrPath[3]);
-});
-
+})
 server.listen(8080, () => {
     console.log('Sever is running');
 });
