@@ -104,12 +104,20 @@
 <body>
 <div class="wrapper">
     <div class="container">
-        <div class="login">
-            <a href="/login" style="width: 225px; height: 60px">Login</a>
-        </div>
-        <div class="signup">
-            <a href="/register">Register</a>
-        </div>
+        <form action="/login" method="get">
+            <div class="login">
+                <input type="submit"
+                       style="font-size: 24px; width: 100%; cursor: pointer"
+                       value="Login">
+            </div>
+        </form>
+        <form action="/register" method="get">
+            <div class="signup">
+                <input type="submit"
+                       style="font-size: 24px; width: 100%; cursor: pointer"
+                       value="Register">
+            </div>
+        </form>
         <form action="/login" method="post">
             <div class="login-form">
                 <input type="text" name="name" required placeholder="Username" class="input"><br/>
@@ -121,6 +129,5 @@
         </form>
     </div>
 </div>
-
 </body>
 </html>
