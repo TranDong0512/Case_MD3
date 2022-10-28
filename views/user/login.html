@@ -15,157 +15,81 @@
             integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
             crossorigin="anonymous"></script>
 
+
     <style>
-        .nav-item {
-            display: block;
-            padding: 0 15px;
-            text-transform: uppercase;
-            font-weight: bold;
-            text-decoration: none;
-            color: #333;
-            position: relative;
+        body {
+            background-color: rgb(219, 226, 226);
         }
 
-        .nav-item:after {
-            content: "";
-            background: tomato;
-            position: absolute;
-            height: 5px;
-            width: 0;
-            bottom: 0;
-            left: 0;
-            transition: all 0.5s ease-in-out;
+        .row {
+            background-color: white;
+            border-radius: 30px;
+            box-shadow: 12px 12px 22px gray;
         }
 
-        .nav-item:hover::after {
-            width: 50%;
-            transform: translatex(50%);
-        }
-
-        .img-cofe {
-            width: 260px;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .search {
-            height: 45px;
-            outline: none;
-            border: 2px solid rgb(20, 219, 20);
-            background-color: transparent;
-            border-radius: 20px 0 0 20px;
-            border-right: none;
+        img {
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
         }
 
         .btn1 {
-            height: 45px;
-            outline: none;
             border: none;
-            background-color: rgb(20, 219, 20);
-            color: white;
-            border-radius: 0 20px 20px 0;
-            transition: all 0.4s;
-        }
-
-        .btn2 {
-            height: 45px;
             outline: none;
-            border: none;
-            background-color: rgb(20, 219, 20);
+            width: 58%;
+            height: 50px;
+            background-color: black;
             color: white;
-            transition: all 0.4s;
-            width: 240px;
-        }
-
-        .btn2:hover {
-            background-color: rgb(20, 124, 20);
+            border-radius: 4px;
+            font-weight: bold;
         }
 
         .btn1:hover {
-            background-color: rgb(20, 219, 20);
-        }
-
-        .bi-person-circle {
-            font-size: 30px;
+            background-color: white;
+            border: 1px solid;
             color: black;
-            cursor: pointer;
-            padding-top: 5px;
-            transition: all 0.4s;
         }
 
-        .bi-person-circle:hover {
-            color: rgb(20, 219, 20);
-        }
-
-        .add {
-            margin-left: 55px;
-        }
-
-        .container1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem;
-        }
     </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-<nav class="navbar navbar-expand-lg bg-light">
+<section class="form my-4 mx-5">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="../menu/HomePage/IMG/logo-thuong-hieu-cafe.png" alt=""
-                                              class="img-cofe"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav m-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#services">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="px-2 search" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn1 me-3 px-3" type="submit">Search</button>
-                <span><i class="bi bi-person-circle"></i></span>
-            </form>
+        <div class="row no-gutters">
+            <div class="col-lg-5">
+                <img src="../menu/HomePage/IMG/quan-cafe-dep-o-ha-noi-14.jpg" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-7 px-5 pt-5">
+                <h1 class="font-weight-bold py-3">Sign Up</h1>
+                <form>
+                    <form action="/login" method="get">
+                        <div class="form-row">
+                            <div class="col-lg-12">
+                                <label>
+                                    <input style="width: 350px" type="email" placeholder="Email-Address"
+                                           class="form-control my-3 p-4 ">
+                                    {notification}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-12">
+                                <label>
+                                    <input style="width: 350px" type="password" placeholder="Password"
+                                           class="form-control my-3 p-4 ">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-12">
+                                <button class="btn1" type="button">Login</button>
+                            </div>
+                            <p>Don't have an Account ? <a href="/register">Register an Account !</a></p>
+                        </div>
+                    </form>
+                </form>
+            </div>
         </div>
     </div>
-</nav>
-<div class="wrapper">
-    <div class="container1">
-        <form action="/login" method="post">
-            <h1>Login an Account</h1>
-            {notification}
-            <br>
-            <p class="add">User :</p>
-            <label>
-                <input class="add" type="text" name="name" placeholder="User" required>
-            </label>
-            <p class="add">Password :</p>
-            <label>
-                <input class="add" type="password" name="price" placeholder="Password" required>
-            </label>
-            <hr>
-            <button style="margin-left: 30px" class="btn2" type="submit">Login</button>
-
-            <div class="login-card-footer">
-                Don't have an Account? <a href="/register">Creat a free account!</a>
-            </div>
-        </form>
-    </div>
-</div>
+</section>
 </body>
 </html>
