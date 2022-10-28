@@ -26,15 +26,21 @@
         </a>
 
         <form action="/user/findProductByName" method="post">
-            <input type="text" name="name">
+            <label>
+                <input type="text" name="name">
+            </label>
             <a>
                 <button type="submit">Tìm kiếm theo tên</button>
             </a>
         </form>
 
         <form action="/user/findProductByPrice" method="post">
-            <input type="number" name="price1">
-            <input type="number" name="price2">
+            <label>
+                <input type="number" name="price1">
+            </label>
+            <label>
+                <input type="number" name="price2">
+            </label>
             <a>
                 <button type="submit">Tìm kiếm theo giá</button>
             </a>
