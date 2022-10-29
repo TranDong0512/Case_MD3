@@ -5,6 +5,7 @@ const connection = require("../../model/connection");
 const userRouting = require('../handler/userRouting');
 
 class ProductRouting {
+
     showAllProduct(req, res) {
         let html = '';
         fs.readFile('./views/product/show.html', "utf-8", async (err, showHtml) => {
@@ -12,24 +13,32 @@ class ProductRouting {
                 console.log(err);
             } else {
                 let products = await productService.getProducts();
-                products.forEach((value, index) => {
-                    html += '<tr>';
-                    html += `<td>${index + 1}</td>`
-                    html += `<td>${value.name}</td>`
-                    html += `<td>${value.price}</td>`
-                    html += `<td>${value.quantity}</td>`
-                    html += `<td><a href="/admin/deleteProduct/${value.id}" ><button type="submit">Delete</button></a></td>`
-                    html += `<td><a href="/admin/editProduct/${value.id}"><button type="submit">Edit</button></a></td>`
-                    html += '</tr>';
+                html += `<div class="container">
+                <div class="row">`
+                products.forEach((value) => {
+                    html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="..." class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p>
+                                                <a  href="/admin/deleteProduct/${value.id}" ><button class="btn btn-primary" type="submit">Delete</button></a>
+                                                    <a href="/admin/editProduct/${value.id}"><button class="btn btn-primary" type="submit">Edit</button></a>
+                </div>
+                </div>
+                </div>`
                 })
             }
-
+            html += "</div></div>"
             res.writeHead(200, {'Content-Type': 'text/html'});
+            console.log(html);
             showHtml = showHtml.replace('{products}', html);
             res.write(showHtml);
             res.end();
         });
     }
+
 
     showAddProduct(req, res) {
         if (req.method === 'GET') {
@@ -188,7 +197,7 @@ class ProductRouting {
         let html = '';
         fs.readFile('./views/product/category.html', "utf-8", async (err, category) => {
             if (err) {
-                console.log(err)
+                console.log(err);
             } else {
                 let category = await productService.getCategory();
                 category.forEach((value, index) => {

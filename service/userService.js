@@ -34,7 +34,6 @@ class UserService {
             }
         });
     }
-
     register(newUser, res) {
         connection.connection.query(`SELECT *FROM users`, function (err, results) {
             if (err) {
