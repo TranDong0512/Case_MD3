@@ -100,6 +100,7 @@
             font-family: roboto;
         }
     </style>
+    <script src="../../service/userService.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -107,16 +108,17 @@
         <form action="/login" method="get">
             <div class="login">
                 <input type="submit"
-                       style="font-size: 24px; width: 100%; cursor: pointer"
+                       style="border: none;background-color: white ;font-size: 24px; width: 100%; cursor: pointer"
                        value="Login">
             </div>
         </form>
         <form action="/register" method="get">
             <div class="signup">
                 <input type="submit"
-                       style="font-size: 24px; width: 100%; cursor: pointer"
+                       style="border: none;background-color: white ;font-size: 24px; width: 100%; cursor: pointer"
                        value="Register">
             </div>
+            <hr>
         </form>
         {notification}
         <form action="/register" method="post">
