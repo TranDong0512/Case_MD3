@@ -5,24 +5,33 @@ const connection = require("../../model/connection");
 const userRouting = require('../handler/userRouting');
 
 class ProductRouting {
-
-    showAllProduct(req, res) {
-        let html = '';
+    showAllProductAdmin(req, res) {
+        let htmlAdmin = '';
         fs.readFile('./views/product/show.html', "utf-8", async (err, showHtml) => {
             if (err) {
                 console.log(err);
             } else {
+                // let products = await productService.getProducts();
+                // products.forEach((value, index) => {
+                //     html += '<tr>';
+                //     html += `<td>${value.name}</td>`
+                //     html += `<td>${value.price}</td>`
+                //     html += `<td>${value.quantity}</td>`
+                //     html += `<td><a href="/admin/deleteProduct/${value.id}" ><button type="submit">Delete</button></a></td>`
+                //     html += `<td><a href="/admin/editProduct/${value.id}"><button type="submit">Edit</button></a></td>`
+                //     html += '</tr>';
+                // })
                 let products = await productService.getProducts();
-                html += `<div class="container">
-                <div class="row">`
+                htmlAdmin += `<div class="container">
+                <div class="row ">`
                 products.forEach((value) => {
-                    html += `
+                    htmlAdmin += `
                                 <div class="col-3 mr-8">
                                     <div class="card mt-12" style="width: 18rem;">
-                                        <img src="..." class="card-img-top" alt="...">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
-                                                <p class="card-text">Giá: ${value.price}</p>
+                                                <p class="card-text">Giá: ${value.price}</p> 
                                                 <a  href="/admin/deleteProduct/${value.id}" ><button class="btn btn-primary" type="submit">Delete</button></a>
                                                     <a href="/admin/editProduct/${value.id}"><button class="btn btn-primary" type="submit">Edit</button></a>
                 </div>
@@ -30,15 +39,13 @@ class ProductRouting {
                 </div>`
                 })
             }
-            html += "</div></div>"
+            htmlAdmin += "</div></div>"
             res.writeHead(200, {'Content-Type': 'text/html'});
-            console.log(html);
-            showHtml = showHtml.replace('{products}', html);
+            showHtml = showHtml.replace('{products}', htmlAdmin);
             res.write(showHtml);
             res.end();
         });
     }
-
 
     showAddProduct(req, res) {
         if (req.method === 'GET') {
@@ -57,7 +64,7 @@ class ProductRouting {
             req.on('end', async () => {
                 const newProduct = qs.parse(dataProduct);
                 await productService.add(newProduct);
-                res.writeHead(301, {'location': '/admin'});
+                res.writeHead(301, {'location': '/admin/showAllProduct'});
                 res.end();
             });
         }
@@ -114,11 +121,21 @@ class ProductRouting {
         }
     }
 
+    getCategory = async () => {
+        let indexCategory = '';
+        let products = await productService.getCategory();
+        indexCategory += ''
+        for(const value of products){
+            indexCategory += `<a href="/user/resultFindProductByCategory/${value.id}" class="col-12">${value.name}</a>`
+        }
+        return indexCategory;
+    }
+
     //Hiện thị sản phẩm theo tên
     showFindProductByName(req, res) {
         if (req.method === 'POST') {
             let nameProduct = '';
-            req.on('data', chunk => {
+            req.on('data', async chunk => {
                 nameProduct += chunk;
             });
             req.on('end', async (err) => {
@@ -131,18 +148,26 @@ class ProductRouting {
                         if (err) {
                             console.log(err);
                         } else {
-                            let products = await productService.findProductByName(nameP.name);
-                            products.forEach((value, index2) => {
-                                html += '<tr>';
-                                html += `<td>${index2 + 1}</td>`
-                                html += `<td>${value.name}</td>`
-                                html += `<td>${value.price}</td>`
-                                html += `<td>${value.quantity}</td>`
-                                html += `<td><a><button type="submit">Thêm</button></a></td>`
-                                html += '</tr>';
+                            let products = await productService.findProductByName(nameP.name)
+                            html += `<div class="container">
+                <div class="row ">`
+                            products.forEach((value) => {
+                                html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p> 
+                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                </div>
+                </div>
+                </div>`
                             })
                         }
                         res.writeHead(200, {'Content-Type': 'text/html'});
+                        let category = await this.getCategory();
+                        userHtml = userHtml.replace('{category}', category);
                         userHtml = userHtml.replace('{products}', html);
                         res.write(userHtml);
                         res.end();
@@ -191,49 +216,97 @@ class ProductRouting {
             })
         }
     }
-
-    //Hiện thị danh sách Loại
-    showFindProductByCategory(req, res) {
+    userShowAll = (req, res)=> {
         let html = '';
-        fs.readFile('./views/product/category.html', "utf-8", async (err, category) => {
+        fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
                 console.log(err);
             } else {
-                let category = await productService.getCategory();
-                category.forEach((value, index) => {
-                    html += '<tr>';
-                    html += `<td>${index + 1}</td>`
-                    html += `<td>${value.name}</td>`
-                    html += `<td><a href="/user/resultFindProductByCategory/${value.id}" ><button type="submit">Search</button></a></td>`
-                    html += '</tr>';
+                let products = await productService.getProducts();
+                html += `<div class="container">
+                <div class="row ">`
+                products.forEach((value) => {
+                    html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p> 
+                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                </div>
+                </div>
+                </div>`
                 })
             }
             res.writeHead(200, {'Content-Type': 'text/html'});
-            category = category.replace('{category}', html);
-            res.write(category);
+            let category = await this.getCategory();
+            userHtml = userHtml.replace('{category}', category);
+            userHtml = userHtml.replace('{products}', html);
+            res.write(userHtml);
             res.end();
-        })
+        });
+    }
+    //Hiện thị danh sách Loại
+    showFindProductByCategory = (req, res) =>{
+        let html = '';
+        fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
+            if (err) {
+                console.log(err);
+            } else {
+                let products = await productService.getProducts();
+                html += `<div class="container">
+                <div class="row ">`
+                products.forEach((value) => {
+                    html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p> 
+                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                </div>
+                </div>
+                </div>`
+                })
+            }
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            let category = await this.getCategory();
+            userHtml = userHtml.replace('{category}', category);
+            userHtml = userHtml.replace('{products}', html);
+            res.write(userHtml);
+            res.end();
+        });
     }
 
     //Hiện thị kết quả tìm kiếm theo Loại
-    showResultFindProductByCategory(req, res, id) {
+    showResultFindProductByCategory = (req, res, id) =>{
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
                 console.log(err);
             } else {
                 let products = await productService.findProductByCategory(id);
-                products.forEach((value, index4) => {
-                    html += '<tr>';
-                    html += `<td>${index4 + 1}</td>`
-                    html += `<td>${value.name}</td>`
-                    html += `<td>${value.price}</td>`
-                    html += `<td>${value.quantity}</td>`
-                    html += `<td><a><button type="submit">Thêm</button></a></td>`
-                    html += '</tr>';
+                html += `<div class="container">
+                <div class="row ">`
+                products.forEach((value) => {
+                    html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p> 
+                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                </div>
+                </div>
+                </div>`
                 })
             }
             res.writeHead(200, {'Content-Type': 'text/html'});
+            let category = await this.getCategory();
+            userHtml = userHtml.replace('{category}', category);
             userHtml = userHtml.replace('{products}', html);
             res.write(userHtml);
             res.end();

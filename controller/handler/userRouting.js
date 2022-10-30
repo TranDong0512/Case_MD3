@@ -3,6 +3,7 @@ const fs = require("fs");
 const qs = require("qs");
 const connection = require("../../model/connection");
 const productService = require("../../service/productService");
+const categoryService = require("../../service/userService")
 
 class UserRouting {
     login(req, res) {
@@ -56,29 +57,6 @@ class UserRouting {
         });
     }
 
-    user(req, res) {
-        let html = '';
-        fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
-            if (err) {
-                console.log(err);
-            } else {
-                let products = await productService.getProducts();
-                products.forEach((value, index1) => {
-                    html += '<tr>';
-                    html += `<td>${index1 + 1}</td>`
-                    html += `<td>${value.name}</td>`
-                    html += `<td>${value.price}</td>`
-                    html += `<td>${value.quantity}</td>`
-                    html += `<td><a><button type="submit">Thêm</button></a></td>`
-                    html += '</tr>';
-                })
-            }
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            userHtml = userHtml.replace('{products}', html);
-            res.write(userHtml);
-            res.end();
-        });
-    }
 }
 
 module.exports = new UserRouting();
