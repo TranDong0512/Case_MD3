@@ -135,7 +135,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
         <a class="navbar-brand" href="#"><img src="../../views/menu/IMG/logo-thuong-hieu-cafe.png" alt="" class="img-cofe"></a>
-        caoooooooooooooooooooooooooooooo
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -145,7 +144,7 @@
                     <a class="nav-link" href="#about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">Services</a>
+                    <a class="nav-link" href="/user/showCart">Giỏ hàng</a>
                 </li>
             </ul>
             <form action="/user/findProductByName" method="post" class="d-flex" role="search">
@@ -156,7 +155,6 @@
         </div>
     </div>
 </nav>
-
 <div class="border-img mt-3">
     <div class="container">
         <div class="row">
@@ -172,8 +170,8 @@
                 <div class="row">
                     <div class="col-12" style="" >
                         <form method="post" action="/user/findProductByPrice">
-                        <input type="number" name="price1" placeholder="Tu" style="margin-bottom: 4px">
-                        <input type="number" name="price2" placeholder=" Den">
+                        <input type="number" name="price1" placeholder="Tu" style="margin-bottom: 4px" required>
+                        <input type="number" name="price2" placeholder=" Den" required>
                         <button type="submit" style="margin-top: 8px">Tim kiem</button>
                         </form>
                     </div>
@@ -231,12 +229,6 @@
 </div>
 {products}
 </div>
-<div id="container">
-    <div id="footer">
-
-    </div>
-</div>
-
 
 </body>
 </html>

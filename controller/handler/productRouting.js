@@ -33,6 +33,8 @@ class ProductRouting {
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
                                                 <p class="card-text">Giá: ${value.price}</p> 
+                                                     <p class="card-text">Số lượng: ${value.quantity}</p> 
+
                                                 <a  href="/admin/deleteProduct/${value.id}" ><button class="btn btn-primary" type="submit">Delete</button></a>
                                                     <a href="/admin/editProduct/${value.id}"><button class="btn btn-primary" type="submit">Edit</button></a>
                 </div>
@@ -126,14 +128,14 @@ class ProductRouting {
         let indexCategory = '';
         let products = await productService.getCategory();
         indexCategory += ''
-        for(const value of products){
+        for (const value of products) {
             indexCategory += `<a href="/user/resultFindProductByCategory/${value.id}" class="col-12">${value.name}</a>`
         }
         return indexCategory;
     }
 
     //Hiện thị sản phẩm theo tên
-    showFindProductByName = (req, res)=> {
+    showFindProductByName = (req, res) => {
         if (req.method === 'POST') {
             let nameProduct = '';
             req.on('data', async chunk => {
@@ -151,7 +153,7 @@ class ProductRouting {
                         } else {
                             let products = await productService.findProductByName(nameP.name);
                             html += `<div class="container">
-                <div class="row ">`
+                            <div class="row ">`
                             products.forEach((value) => {
                                 html += `
                                 <div class="col-3 mr-8">
@@ -160,13 +162,15 @@ class ProductRouting {
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
                                                 <p class="card-text">Giá: ${value.price}</p> 
-                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                     <p className="card-text">Số lượng: ${value.quantity}</p> 
+                                                <form>
+                                                <input type="number" required name="quantity" style="margin-bottom: 8px">
+                                                <a href="/user/addProductToOrder/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                </form>
                 </div>
                 </div>
                 </div>`
                             })
-
-
                         }
                         res.writeHead(200, {'Content-Type': 'text/html'});
                         let category = await this.getCategory();
@@ -181,7 +185,7 @@ class ProductRouting {
     }
 
     //Hiện thị sản phẩm theo giá
-    showFindProductByPrice = (req, res)=> {
+    showFindProductByPrice = (req, res) => {
         if (req.method === 'POST') {
             let priceProduct = '';
             req.on('data', chunk => {
@@ -210,7 +214,12 @@ class ProductRouting {
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
                                                 <p class="card-text">Giá: ${value.price}</p> 
-                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                     <p className="card-text">Số lượng: ${value.quantity}</p> 
+
+                                                <form>
+                                                <input type="number" required name="quantity" style="margin-bottom: 8px">
+                                                <a href="/user/addProductToOrder/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                </form>
                 </div>
                 </div>
                 </div>`
@@ -227,7 +236,7 @@ class ProductRouting {
             })
         }
     }
-    userShowAll = (req, res)=> {
+    userShowAll = (req, res) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
@@ -244,7 +253,11 @@ class ProductRouting {
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
                                                 <p class="card-text">Giá: ${value.price}</p> 
-                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                     <p className="card-text">Số lượng: ${value.quantity}</p> 
+                                                <form method="post" action="/user/addProductToOrder/${value.id}">
+                                                <input type="number" required name="quantity" style="margin-bottom: 8px">
+                                                <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+                                                </form>
                 </div>
                 </div>
                 </div>`
@@ -260,7 +273,7 @@ class ProductRouting {
 
     }
     //Hiện thị danh sách Loại
-    showFindProductByCategory = (req, res) =>{
+    showFindProductByCategory = (req, res) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
@@ -277,7 +290,11 @@ class ProductRouting {
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
                                                 <p class="card-text">Giá: ${value.price}</p> 
-                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                     <p className="card-text">Số lượng: ${value.quantity}</p> 
+                                                <form method="post" action="/user/addProductToOrder/${value.id}">
+                                                <input type="number" required name="quantity" style="margin-bottom: 8px">
+                                                <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+                                                </form>
                 </div>
                 </div>
                 </div>`
@@ -293,7 +310,7 @@ class ProductRouting {
     }
 
     //Hiện thị kết quả tìm kiếm theo Loại
-    showResultFindProductByCategory = (req, res, id) =>{
+    showResultFindProductByCategory = (req, res, id) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
@@ -310,7 +327,11 @@ class ProductRouting {
                                          <div class="card-body">
                                              <h5 class="card-title">${value.name}</h5>
                                                 <p class="card-text">Giá: ${value.price}</p> 
-                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                                                     <p className="card-text">Số lượng: ${value.quantity}</p> 
+                                                <form method="post" action="/user/addProductToOrder/${value.id}">
+                                                <input type="number" required name="quantity" style="margin-bottom: 8px">
+                                                <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+                                                </form>
                 </div>
                 </div>
                 </div>`
@@ -336,7 +357,6 @@ class ProductRouting {
         }
         let idOrderFind = await productService.getIdOrder(userService.getIdUser());
         let quantityP = await productService.getQuantityP(idP);
-
         if (req.method === 'POST') {
             let quantityBuy = '';
             req.on('data', chunk => {

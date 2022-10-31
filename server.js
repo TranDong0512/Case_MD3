@@ -47,6 +47,6 @@ const server = http.createServer((req, res) => {
     }
 })
 
-server.listen(8080, () => {
+server.listen(3000, () => {
     console.log('Sever is running');
 });

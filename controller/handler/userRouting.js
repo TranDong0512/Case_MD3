@@ -82,9 +82,9 @@ class UserRouting {
     }
 
     async showCart(req, res) {
-        let html = ''
+        let html =''
         let idOrderFind = await productService.getIdOrder(userService.getIdUser());
-        let total = await userService.getTotalPrice(idOrderFind);
+       let total = await userService.getTotalPrice(idOrderFind)
         if (req.method === 'GET') {
             fs.readFile('./views/user/cart.html', "utf-8", async (err, cartHtml) => {
                 if (err) {
@@ -92,21 +92,28 @@ class UserRouting {
                 } else {
                     let idOrderFind = await productService.getIdOrder(userService.getIdUser());
                     let products = await productService.getProductsFromOrderD(idOrderFind);
-                    products.forEach((value, index5) => {
-                        html += '<tr>';
-                        html += `<td>${index5 + 1}</td>`
-                        html += `<td>${value.name}</td>`
-                        html += `<td>${value.price}</td>`
-                        html += `<td>${value.quantity}</td>`
-                        html += `<td><a href="/user/deleteProduct/${value.id}" ><button type="button">Delete</button></a></td>`
-                        html += '</tr>';
-                    })
+                    for (const value of products) {
+                        html += `<div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${value.name}</h5>
+                                            <p class="card-text">Giá: ${value.price}</p>
+                                            <p className="card-text">Số lượng: ${value.quantity}</p>
+                                            <form>
+                                                <a href="/user/deleteProduct/${value.id}"><button type="button">Delete</button>
+                                                </a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>`
+                    }
+                    res.writeHead(200, {'Content-Type': 'text/html'});
+                    cartHtml = cartHtml.replace('{products}', html);
+                    cartHtml = cartHtml.replace('{total}', total[0].total);
+                    res.write(cartHtml);
+                    res.end();
                 }
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                cartHtml = cartHtml.replace('{products}', html);
-                cartHtml = cartHtml.replace('{total}', total[0].total);
-                res.write(cartHtml);
-                res.end();
             })
         } else {
 
