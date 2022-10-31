@@ -69,7 +69,7 @@ class UserRouting {
                     html += `<td>${value.name}</td>`
                     html += `<td>${value.price}</td>`
                     html += `<td>${value.quantity}</td>`
-                    html += `<td><a><button type="submit">Thêm</button></a></td>`
+                    html += `<td> <form action="/user/addProductToOrder/${value.id}" method="post"> <input type="number" name="quantity"> <button type="submit">Thêm</button></form></td>`
                     html += '</tr>';
                 })
             }
@@ -78,6 +78,79 @@ class UserRouting {
             res.write(userHtml);
             res.end();
         });
+    }
+
+    async showCart(req, res) {
+        let html = ''
+        let idOrderFind = await productService.getIdOrder(userService.getIdUser());
+        let total = await userService.getTotalPrice(idOrderFind);
+        if (req.method === 'GET') {
+            fs.readFile('./views/user/cart.html', "utf-8", async (err, cartHtml) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    let idOrderFind = await productService.getIdOrder(userService.getIdUser());
+                    let products = await productService.getProductsFromOrderD(idOrderFind);
+                    products.forEach((value, index5) => {
+                        html += '<tr>';
+                        html += `<td>${index5 + 1}</td>`
+                        html += `<td>${value.name}</td>`
+                        html += `<td>${value.price}</td>`
+                        html += `<td>${value.quantity}</td>`
+                        html += `<td><a href="/user/deleteProduct/${value.id}" ><button type="button">Delete</button></a></td>`
+                        html += '</tr>';
+                    })
+                }
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                cartHtml = cartHtml.replace('{products}', html);
+                cartHtml = cartHtml.replace('{total}', total[0].total);
+                res.write(cartHtml);
+                res.end();
+            })
+        } else {
+
+        }
+    }
+
+    async showDeleteProduct(req, res, id) {
+        if (req.method === 'GET') {
+            fs.readFile('./views/user/deleteProduct.html', "utf-8", async (err, deleteHtml2) => {
+                let product = await userService.findProductById(id);
+                deleteHtml2 = deleteHtml2.replace('{name}', product[0].name);
+                deleteHtml2 = deleteHtml2.replace('{price}', product[0].price);
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.write(deleteHtml2);
+                res.end();
+            });
+        } else {
+            await userService.deleteProduct(id)
+            res.writeHead(301, {'location': '/user/showCart'});
+            res.end();
+        }
+    }
+
+    async buyProduct(req, res) {
+        let idOrderFind = await productService.getIdOrder(userService.getIdUser());
+        await userService.buyProduct(idOrderFind);
+        fs.readFile('./views/user/cart.html', "utf-8", async (err, cartHtml) => {
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            cartHtml = cartHtml.replace('{products}', '');
+            cartHtml = cartHtml.replace('{total}', 0);
+            res.write(cartHtml);
+            res.end();
+        })
+    }
+
+    async deleteCart(req, res) {
+        let idOrderFind = await productService.getIdOrder(userService.getIdUser());
+        await userService.deleteCart(idOrderFind);
+        fs.readFile('./views/user/cart.html', "utf-8", async (err, cart) => {
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            cart = cart.replace('{products}', '');
+            cart = cart.replace('{total}', 0);
+            res.write(cart);
+            res.end();
+        })
     }
 }
 

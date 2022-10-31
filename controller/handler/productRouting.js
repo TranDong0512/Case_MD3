@@ -1,8 +1,9 @@
-const productService = require('../../service/productService')
+const productService = require('../../service/productService');
 const fs = require("fs");
 const qs = require("qs");
 const connection = require("../../model/connection");
 const userRouting = require('../handler/userRouting');
+const userService = require('../../service/userService');
 
 class ProductRouting {
     showAllProduct(req, res) {
@@ -89,7 +90,7 @@ class ProductRouting {
     showDeleteProduct(req, res, id) {
         if (req.method === 'GET') {
             fs.readFile('./views/product/delete.html', "utf-8", async (err, deleteHtml) => {
-                let product = await productService.findById(id);
+                let product = await productService.findById(id)
                 deleteHtml = deleteHtml.replace('{name}', product[0].name);
                 deleteHtml = deleteHtml.replace('{price}', product[0].price);
                 res.writeHead(200, {'Content-Type': 'text/html'});
@@ -214,6 +215,7 @@ class ProductRouting {
                 console.log(err);
             } else {
                 let products = await productService.findProductByCategory(id);
+                console.log(products)
                 products.forEach((value, index4) => {
                     html += '<tr>';
                     html += `<td>${index4 + 1}</td>`
@@ -229,6 +231,38 @@ class ProductRouting {
             res.write(userHtml);
             res.end();
         });
+    }
+
+    //Thêm sản phẩm vào hóa đơn
+    async showAddProductToOrder(req, res, idP) {
+
+        let isExists = await productService.checkOrder(userService.getIdUser());
+        if (!isExists) {
+            await productService.createOrder(userService.getIdUser());
+            console.log(1)
+        }
+        let idOrderFind = await productService.getIdOrder(userService.getIdUser());
+        let quantityP = await productService.getQuantityP(idP);
+
+        if (req.method === 'POST') {
+            let quantityBuy = '';
+            req.on('data', chunk => {
+                quantityBuy += chunk;
+            });
+            req.on('end', async () => {
+                const quantityB = qs.parse(quantityBuy);
+                if (quantityB.quantity > quantityP.quantity) {
+                    res.writeHead(301, {'location': '/user'});
+                    res.end();
+                } else {
+                    await productService.addProductToOrderDetail(quantityB.quantity, idOrderFind, idP);
+                    let quantityAfterBuy = quantityP.quantity - quantityB.quantity;
+                    await productService.quantityAfterBuy(quantityAfterBuy, idP);
+                    res.writeHead(301, {'location': '/user'});
+                    res.end();
+                }
+            });
+        }
     }
 }
 
