@@ -14,6 +14,11 @@ const router = {
     'user/findProductByPrice': productRouting.showFindProductByPrice,
     'user/findProductByCategory': productRouting.showFindProductByCategory,
     'user/resultFindProductByCategory': productRouting.showResultFindProductByCategory,
+    'user/addProductToOrder': productRouting.showAddProductToOrder,
+    'user/showCart': userRouting.showCart,
+    'user/deleteProduct': userRouting.showDeleteProduct,
+    'user/purchase': userRouting.buyProduct,
+    'user/deleteCart': userRouting.deleteCart,
 }
 
 module.exports = router;

@@ -1,8 +1,9 @@
-const productService = require('../../service/productService')
+const productService = require('../../service/productService');
 const fs = require("fs");
 const qs = require("qs");
 const connection = require("../../model/connection");
 const userRouting = require('../handler/userRouting');
+const userService = require('../../service/userService');
 
 class ProductRouting {
     showAllProductAdmin(req, res) {
@@ -105,7 +106,7 @@ class ProductRouting {
     showDeleteProduct(req, res, id) {
         if (req.method === 'GET') {
             fs.readFile('./views/product/delete.html', "utf-8", async (err, deleteHtml) => {
-                let product = await productService.findById(id);
+                let product = await productService.findById(id)
                 deleteHtml = deleteHtml.replace('{name}', product[0].name);
                 deleteHtml = deleteHtml.replace('{price}', product[0].price);
                 res.writeHead(200, {'Content-Type': 'text/html'});
@@ -132,7 +133,7 @@ class ProductRouting {
     }
 
     //Hiện thị sản phẩm theo tên
-    showFindProductByName(req, res) {
+    showFindProductByName = (req, res)=> {
         if (req.method === 'POST') {
             let nameProduct = '';
             req.on('data', async chunk => {
@@ -148,7 +149,57 @@ class ProductRouting {
                         if (err) {
                             console.log(err);
                         } else {
-                            let products = await productService.findProductByName(nameP.name)
+                            let products = await productService.findProductByName(nameP.name);
+                            html += `<div class="container">
+                <div class="row ">`
+                            products.forEach((value) => {
+                                html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p> 
+                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                </div>
+                </div>
+                </div>`
+                            })
+
+
+                        }
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        let category = await this.getCategory();
+                        userHtml = userHtml.replace('{category}', category);
+                        userHtml = userHtml.replace('{products}', html);
+                        res.write(userHtml);
+                        res.end();
+                    });
+                }
+            })
+        }
+    }
+
+    //Hiện thị sản phẩm theo giá
+    showFindProductByPrice = (req, res)=> {
+        if (req.method === 'POST') {
+            let priceProduct = '';
+            req.on('data', chunk => {
+                priceProduct += chunk;
+                console.log(priceProduct);
+            });
+            req.on('end', async (err) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    let priceP = qs.parse(priceProduct);
+                    console.log(priceP)
+                    let html = '';
+                    fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            let products = await productService.findProductByPrice(priceP.price1, priceP.price2);
                             html += `<div class="container">
                 <div class="row ">`
                             products.forEach((value) => {
@@ -168,46 +219,6 @@ class ProductRouting {
                         res.writeHead(200, {'Content-Type': 'text/html'});
                         let category = await this.getCategory();
                         userHtml = userHtml.replace('{category}', category);
-                        userHtml = userHtml.replace('{products}', html);
-                        res.write(userHtml);
-                        res.end();
-                    });
-                }
-            })
-        }
-    }
-
-    //Hiện thị sản phẩm theo giá
-    showFindProductByPrice(req, res) {
-        if (req.method === 'POST') {
-            let priceProduct = '';
-            req.on('data', chunk => {
-                priceProduct += chunk;
-                console.log(priceProduct);
-            });
-            req.on('end', async (err) => {
-                if (err) {
-                    console.log(err)
-                } else {
-                    let priceP = qs.parse(priceProduct);
-                    console.log(priceP)
-                    let html = '';
-                    fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            let products = await productService.findProductByPrice(priceP.price1, priceP.price2);
-                            products.forEach((value, index3) => {
-                                html += '<tr>';
-                                html += `<td>${index3 + 1}</td>`
-                                html += `<td>${value.name}</td>`
-                                html += `<td>${value.price}</td>`
-                                html += `<td>${value.quantity}</td>`
-                                html += `<td><a><button type="submit">Thêm</button></a></td>`
-                                html += '</tr>';
-                            })
-                        }
-                        res.writeHead(200, {'Content-Type': 'text/html'});
                         userHtml = userHtml.replace('{products}', html);
                         res.write(userHtml);
                         res.end();
@@ -246,6 +257,7 @@ class ProductRouting {
             res.write(userHtml);
             res.end();
         });
+
     }
     //Hiện thị danh sách Loại
     showFindProductByCategory = (req, res) =>{
@@ -302,6 +314,7 @@ class ProductRouting {
                 </div>
                 </div>
                 </div>`
+
                 })
             }
             res.writeHead(200, {'Content-Type': 'text/html'});
@@ -311,6 +324,38 @@ class ProductRouting {
             res.write(userHtml);
             res.end();
         });
+    }
+
+    //Thêm sản phẩm vào hóa đơn
+    async showAddProductToOrder(req, res, idP) {
+
+        let isExists = await productService.checkOrder(userService.getIdUser());
+        if (!isExists) {
+            await productService.createOrder(userService.getIdUser());
+            console.log(1)
+        }
+        let idOrderFind = await productService.getIdOrder(userService.getIdUser());
+        let quantityP = await productService.getQuantityP(idP);
+
+        if (req.method === 'POST') {
+            let quantityBuy = '';
+            req.on('data', chunk => {
+                quantityBuy += chunk;
+            });
+            req.on('end', async () => {
+                const quantityB = qs.parse(quantityBuy);
+                if (quantityB.quantity > quantityP.quantity) {
+                    res.writeHead(301, {'location': '/user'});
+                    res.end();
+                } else {
+                    await productService.addProductToOrderDetail(quantityB.quantity, idOrderFind, idP);
+                    let quantityAfterBuy = quantityP.quantity - quantityB.quantity;
+                    await productService.quantityAfterBuy(quantityAfterBuy, idP);
+                    res.writeHead(301, {'location': '/user'});
+                    res.end();
+                }
+            });
+        }
     }
 }
 
