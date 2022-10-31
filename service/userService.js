@@ -149,12 +149,12 @@ class UserService {
             connection.connection.query(`
                 delete
                 from orders
-                where id = ${idO}`, (err, products) => {
+                where id = ${idO}`, (err, orders) => {
                 if (err) {
                     reject(err);
                 } else {
                     console.log('Delete Success !!!');
-                    resolve(products);
+                    resolve(orders);
                 }
             });
         })

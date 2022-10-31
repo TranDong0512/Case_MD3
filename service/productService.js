@@ -242,6 +242,37 @@ class ProductService {
             });
         })
     }
+
+    getOrders() {
+        return new Promise((resolve, reject) => {
+            connection.connection.query('select * from orders join users u on u.id = orders.idUser', (err, orders) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(orders);
+                }
+            });
+        })
+    }
+
+    deleteOrder(idO) {
+        return new Promise((resolve, reject) => {
+            connection.connection.query(` delete
+                                          from orderdetail
+                                          where idOrder = ${idO}`);
+            connection.connection.query(`
+                delete
+                from orders
+                where id = ${idO}`, (err, orders) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Delete Success !!!');
+                    resolve(orders);
+                }
+            });
+        })
+    }
 }
 
 module.exports = new ProductService();
