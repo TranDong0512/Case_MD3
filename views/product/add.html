@@ -117,7 +117,7 @@
         crossorigin="anonymous"></script>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="../menu/HomePage/IMG/logo-thuong-hieu-cafe.png" alt=""
+        <a class="navbar-brand" href="#"><img src="C:\Users\Ngoc Anh\WebstormProjects\Case_MD3\views\menu\IMG\logo-thuong-hieu-cafe.png" alt=""
                                               class="img-cofe"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,7 +126,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home">Home</a>
+                    <a class="nav-link" href="/admin">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About</a>
@@ -159,6 +159,13 @@
         <p class="add">Quantity : </p>
         <label>
             <input class="add" type="number" name="quantity" placeholder="Quantity" required>
+        </label>
+        <p class="add">Category : </p>
+        <label>
+            <select class="add" >
+                <option selected> Selecte Category</option>
+                {categories}
+            </select>
         </label>
         <hr>
         <button style="margin-left: 55px" class="btn2" type="submit">Thêm</button>

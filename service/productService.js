@@ -30,9 +30,10 @@ class ProductService {
 
     add(product) {
         return new Promise((resolve, reject) => {
-            const sql = `INSERT INTO products(name, price, quantity,IMG)
-                         values ("${product.name}", ${product.price}, ${product.quantity}, "${product.img}")`;
-            connection.connection.query(sql, function (err) {
+            connection.connection.query(`insert into products(name, price, quantity, IMG, idcategory)
+                                         values ("${product.name}", "${+product.price}", "${+product.quantity}",
+                                                 "${product.IMG}",
+                                                 "${+product.idcategory}");`, function (err, product) {
                 if (err) {
                     reject(err);
                 } else {
@@ -42,6 +43,7 @@ class ProductService {
             })
         });
     }
+
     findById(id) {
         return new Promise((resolve, reject) => {
             connection.connection.query(`select *

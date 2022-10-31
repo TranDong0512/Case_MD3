@@ -4,6 +4,7 @@ const qs = require("qs");
 const connection = require("../../model/connection");
 const userRouting = require('../handler/userRouting');
 const userService = require('../../service/userService');
+const categoryService = require('../../service/productService')
 
 class ProductRouting {
     showAllProductAdmin(req, res) {
@@ -50,8 +51,15 @@ class ProductRouting {
 
     showAddProduct(req, res) {
         if (req.method === 'GET') {
-            fs.readFile('./views/product/add.html', "utf-8", (err, addHtml) => {
+            let htmlCategory = ''
+            fs.readFile('./views/product/add.html', "utf-8", async (err, addHtml) => {
+                let categories = await categoryService.getCategory();
+                for (let i = 0; i < categories.length; i++) {
+                    htmlCategory += `<option>${categories[i].name}</option>
+`
+                }
                 res.writeHead(200, {'Content-Type': 'text/html'});
+                addHtml = addHtml.replace('{categories}', htmlCategory)
                 res.write(addHtml);
                 res.end();
             });
@@ -126,14 +134,14 @@ class ProductRouting {
         let indexCategory = '';
         let products = await productService.getCategory();
         indexCategory += ''
-        for(const value of products){
+        for (const value of products) {
             indexCategory += `<a href="/user/resultFindProductByCategory/${value.id}" class="col-12">${value.name}</a>`
         }
         return indexCategory;
     }
 
     //Hiện thị sản phẩm theo tên
-    showFindProductByName = (req, res)=> {
+    showFindProductByName = (req, res) => {
         if (req.method === 'POST') {
             let nameProduct = '';
             req.on('data', async chunk => {
@@ -181,7 +189,7 @@ class ProductRouting {
     }
 
     //Hiện thị sản phẩm theo giá
-    showFindProductByPrice = (req, res)=> {
+    showFindProductByPrice = (req, res) => {
         if (req.method === 'POST') {
             let priceProduct = '';
             req.on('data', chunk => {
@@ -227,7 +235,7 @@ class ProductRouting {
             })
         }
     }
-    userShowAll = (req, res)=> {
+    userShowAll = (req, res) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
@@ -260,7 +268,7 @@ class ProductRouting {
 
     }
     //Hiện thị danh sách Loại
-    showFindProductByCategory = (req, res) =>{
+    showFindProductByCategory = (req, res) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {
@@ -293,7 +301,7 @@ class ProductRouting {
     }
 
     //Hiện thị kết quả tìm kiếm theo Loại
-    showResultFindProductByCategory = (req, res, id) =>{
+    showResultFindProductByCategory = (req, res, id) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {

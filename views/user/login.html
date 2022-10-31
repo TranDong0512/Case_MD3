@@ -56,16 +56,16 @@
     <div class="container">
         <div class="row no-gutters">
             <div class="col-lg-5">
-                <img src="../menu/HomePage/IMG/quan-cafe-dep-o-ha-noi-14.jpg" class="img-fluid" alt="">
+                <img src="./views/menu/IMG/quan-cafe-dep-o-ha-noi-14.jpg" class="img-fluid" alt="">
             </div>
             <div class="col-lg-7 px-5 pt-5">
                 <h1 class="font-weight-bold py-3">Sign Up</h1>
                 <form>
-                    <form action="/login" method="get">
+                    <form action="/login" method="POST">
                         <div class="form-row">
                             <div class="col-lg-12">
                                 <label>
-                                    <input style="width: 350px" type="email" placeholder="Email-Address"
+                                    <input style="width: 350px" type="text" placeholder="User Name"
                                            class="form-control my-3 p-4 ">
                                     {notification}
                                 </label>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-row">
                             <div class="col-lg-12">
-                                <button class="btn1" type="button">Login</button>
+                                <button class="btn1" type="submit">Login</button>
                             </div>
                             <p>Don't have an Account ? <a href="/register">Register an Account !</a></p>
                         </div>
