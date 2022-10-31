@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -88,28 +88,6 @@
             color: rgb(20, 219, 20);
         }
 
-        .product {
-            background-color: transparent;
-            transition: all 0.4s;
-            color: black;
-        }
-
-        .product:hover {
-            color: rgb(20, 219, 20);
-        }
-
-        .btn {
-            background: rgb(14, 124, 36);
-            border: transparent;
-            transition: all 0.4s ease-in-out;
-        }
-
-        .mr-8 {
-            margin-right: 90px;
-            margin-top: 4px;
-            margin-bottom: 18px;
-        }
-
         .btn:hover .product {
             display: block;
         }
@@ -118,13 +96,6 @@
             height: 420px;
         }
 
-        #footer {
-
-            width: 1110px;
-            height: 200px;
-            background-color: gainsboro;
-            margin: 12px auto 46px;
-        }
     </style>
 
 </head>
@@ -139,10 +110,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-link" href="/user">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/showCart">Giỏ hàng</a>
@@ -161,23 +129,6 @@
     <div class="container">
         <div class="row">
             <div class="col-2">
-                <!--                <h5>Loại Sản Phẩm</h5>-->
-                <!--                <div class="row">-->
-                <!--                    {category}-->
-                <!--                    &lt;!&ndash;                    <a href="/admin/showAllProduct" class="col-12">Loai SP 1</a>&ndash;&gt;-->
-                <!--                    &lt;!&ndash;                    <div class="col-12">Loai SP 2</div>&ndash;&gt;-->
-                <!--                </div>-->
-                <!--                <hr>-->
-                <!--                <h5>Mức Giá</h5>-->
-                <!--                <div class="row">-->
-                <!--                    <div class="col-12" style="" >-->
-                <!--                        <form method="post" action="/user/findProductByPrice">-->
-                <!--                            <input type="number" name="price1" placeholder="Tu" style="margin-bottom: 4px" required>-->
-                <!--                            <input type="number" name="price2" placeholder=" Den" required>-->
-                <!--                            <button type="submit" style="margin-top: 8px">Tim kiem</button>-->
-                <!--                        </form>-->
-                <!--                    </div>-->
-                <!--                </div>-->
                 <hr>
             </div>
             <div class="col-8">
@@ -244,9 +195,6 @@
     </a>
     <a href="/user/deleteCart">
         <button type="button">Delete Cart</button>
-    </a>
-    <a href="/user">
-        <button type="button">Thoát</button>
     </a>
 </div>
 
