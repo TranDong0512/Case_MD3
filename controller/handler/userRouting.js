@@ -70,7 +70,7 @@ class UserRouting {
                     html += `<td>${value.name}</td>`
                     html += `<td>${value.price}</td>`
                     html += `<td>${value.quantity}</td>`
-                    html += `<td> <form action="/user/addProductToOrder/${value.id}" method="post"> <input type="number" name="quantity"> <button type="submit">Thêm</button></form></td>`
+                    html += `<td> <form action="/user/addProductToOrder/${value.id}" method="post"> <input type="number" name="quantity" required> <button type="submit">Thêm</button></form></td>`
                     html += '</tr>';
                 })
             }

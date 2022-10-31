@@ -357,6 +357,38 @@ class ProductRouting {
             });
         }
     }
+
+    showAllOrder(req, res) {
+        let html = '';
+        fs.readFile('./views/product/showAllOrder.html', "utf-8", async (err, showAllOrderHtml) => {
+            if (err) {
+                console.log(err);
+            } else {
+                let orders = await productService.getOrders();
+                orders.forEach((value, index) => {
+                    const status = Boolean(Buffer.from(value.status).readUInt8())
+                    html += '<tr>';
+                    html += `<td>${index + 1}</td>`
+                    html += `<td>${value.id}</td>`
+                    html += `<td>${value.name}</td>`
+                    html += `<td>${status ? "Đã thanh toán" : "Chưa thanh toán"}</td>`
+                    html += `<td><a href="/admin/deleteOrder/${value.id}" ><button type="button">Delete</button></a></td>`
+                    html += '</tr>';
+                })
+            }
+
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            showAllOrderHtml = showAllOrderHtml.replace('{orders}', html);
+            res.write(showAllOrderHtml);
+            res.end();
+        });
+    }
+
+    async deleteOrder(req, res, idO) {
+        await productService.deleteOrder(idO);
+        res.writeHead(301, {'location': '/admin/showAllOrder'});
+        res.end();
+    }
 }
 
 module.exports = new ProductRouting();
