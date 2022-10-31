@@ -132,7 +132,7 @@ class ProductRouting {
     }
 
     //Hiện thị sản phẩm theo tên
-    showFindProductByName(req, res) {
+    showFindProductByName = (req, res)=> {
         if (req.method === 'POST') {
             let nameProduct = '';
             req.on('data', async chunk => {
@@ -148,7 +148,57 @@ class ProductRouting {
                         if (err) {
                             console.log(err);
                         } else {
-                            let products = await productService.findProductByName(nameP.name)
+                            let products = await productService.findProductByName(nameP.name);
+                            html += `<div class="container">
+                <div class="row ">`
+                            products.forEach((value) => {
+                                html += `
+                                <div class="col-3 mr-8">
+                                    <div class="card mt-12" style="width: 18rem;">
+                                        <img src="${value.IMG}" class="card-img-top" alt="...">
+                                         <div class="card-body">
+                                             <h5 class="card-title">${value.name}</h5>
+                                                <p class="card-text">Giá: ${value.price}</p> 
+                                                <a href="/user/${value.id}"><button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button></a>
+                </div>
+                </div>
+                </div>`
+                            })
+
+
+                        }
+                        res.writeHead(200, {'Content-Type': 'text/html'});
+                        let category = await this.getCategory();
+                        userHtml = userHtml.replace('{category}', category);
+                        userHtml = userHtml.replace('{products}', html);
+                        res.write(userHtml);
+                        res.end();
+                    });
+                }
+            })
+        }
+    }
+
+    //Hiện thị sản phẩm theo giá
+    showFindProductByPrice = (req, res)=> {
+        if (req.method === 'POST') {
+            let priceProduct = '';
+            req.on('data', chunk => {
+                priceProduct += chunk;
+                console.log(priceProduct);
+            });
+            req.on('end', async (err) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    let priceP = qs.parse(priceProduct);
+                    console.log(priceP)
+                    let html = '';
+                    fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            let products = await productService.findProductByPrice(priceP.price1, priceP.price2);
                             html += `<div class="container">
                 <div class="row ">`
                             products.forEach((value) => {
@@ -168,46 +218,6 @@ class ProductRouting {
                         res.writeHead(200, {'Content-Type': 'text/html'});
                         let category = await this.getCategory();
                         userHtml = userHtml.replace('{category}', category);
-                        userHtml = userHtml.replace('{products}', html);
-                        res.write(userHtml);
-                        res.end();
-                    });
-                }
-            })
-        }
-    }
-
-    //Hiện thị sản phẩm theo giá
-    showFindProductByPrice(req, res) {
-        if (req.method === 'POST') {
-            let priceProduct = '';
-            req.on('data', chunk => {
-                priceProduct += chunk;
-                console.log(priceProduct);
-            });
-            req.on('end', async (err) => {
-                if (err) {
-                    console.log(err)
-                } else {
-                    let priceP = qs.parse(priceProduct);
-                    console.log(priceP)
-                    let html = '';
-                    fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            let products = await productService.findProductByPrice(priceP.price1, priceP.price2);
-                            products.forEach((value, index3) => {
-                                html += '<tr>';
-                                html += `<td>${index3 + 1}</td>`
-                                html += `<td>${value.name}</td>`
-                                html += `<td>${value.price}</td>`
-                                html += `<td>${value.quantity}</td>`
-                                html += `<td><a><button type="submit">Thêm</button></a></td>`
-                                html += '</tr>';
-                            })
-                        }
-                        res.writeHead(200, {'Content-Type': 'text/html'});
                         userHtml = userHtml.replace('{products}', html);
                         res.write(userHtml);
                         res.end();
@@ -246,6 +256,7 @@ class ProductRouting {
             res.write(userHtml);
             res.end();
         });
+
     }
     //Hiện thị danh sách Loại
     showFindProductByCategory = (req, res) =>{
