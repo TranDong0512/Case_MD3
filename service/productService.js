@@ -71,6 +71,21 @@ class ProductService {
         })
     }
 
+    quantityAfterBuy(quantity, id) {
+        return new Promise((resolve, reject) => {
+            connection.connection.query(`update products
+                                         set quantity = '${quantity}'
+                                         where id = ${id}`, (err, quantity) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Edit Success !!!');
+                    resolve(quantity);
+                }
+            });
+        })
+    }
+
     edit(product, id) {
         return new Promise((resolve, reject) => {
             connection.connection.query(`update products
@@ -89,7 +104,9 @@ class ProductService {
 
     findProductByName(nameP) {
         return new Promise((resolve, reject) => {
-            connection.connection.query(`select * from products where name = '${nameP}'`, (err, products) => {
+            connection.connection.query(`select *
+                                         from products
+                                         where name = '${nameP}'`, (err, products) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -102,7 +119,9 @@ class ProductService {
 
     findProductByPrice(price1, price2) {
         return new Promise((resolve, reject) => {
-            connection.connection.query(`select * from products where price between ${price1} and ${price2}`, (err, products) => {
+            connection.connection.query(`select *
+                                         from products
+                                         where price between ${price1} and ${price2}`, (err, products) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -115,11 +134,108 @@ class ProductService {
 
     findProductByCategory(idC) {
         return new Promise((resolve, reject) => {
-            connection.connection.query(`select * from products where idCategory = ${idC}`, (err, products) => {
+            connection.connection.query(`select *
+                                         from products
+                                         where idCategory = ${idC}`, (err, products) => {
                 if (err) {
                     reject(err);
                 } else {
                     console.log('Find Success !!!');
+                    resolve(products);
+                }
+            });
+        })
+    }
+
+    createOrder(idUser) {
+        const sql = `INSERT INTO orders(idUser, status)
+                     values ("${idUser}", false)`;
+        connection.connection.query(sql, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Insert Data Success !!!');
+            }
+        })
+    }
+
+    //Người dùng đang đăng nhập đã có hóa đơn chưa?
+    checkOrder(idU) {
+        return new Promise((resolve, reject) => {
+            const sql = `select *
+                         from orders
+                         where idUser = ${idU}
+                           and status = false`  //Status = false : chưa thanh toán
+            connection.connection.query(sql, (err, results) => {
+                if (err) {
+                    reject(err);
+                }
+                if (results.length === 0) {
+                    resolve(false) // false : Người dùng không có hóa đơn chưa thanh toán
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    }
+
+    getIdOrder(idU) {
+        return new Promise((resolve, reject) => {
+            const sql = `select *
+                         from orders
+                         where idUser = ${idU}
+                           and status = false`
+            connection.connection.query(sql, (err, results) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(results[0].id)
+            })
+        })
+    }
+
+    getQuantityP(id) {
+        return new Promise((resolve, reject) => {
+            const sql = `select products.quantity
+                         from products
+                         where id = ${id}`
+            connection.connection.query(sql, (err, results) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(results[0])
+            })
+        })
+    }
+
+    //Thêm sản phẩm vào hóa đơn(oD)
+    addProductToOrderDetail(quantity, idO, idP) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO orderdetail(quantity, idOrder, idProduct)
+                         values ("${quantity}", "${idO}", ${idP})`;
+            connection.connection.query(sql, (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Insert Data Success');
+                    resolve('Đã thêm vào orderDetail');
+                }
+            })
+        })
+    }
+
+    getProductsFromOrderD(idO) {
+        return new Promise((resolve, reject) => {
+            const sql = `select SUM(orderdetail.quantity) as quantity, products.id, products.name, price
+                         from orderdetail
+                                  join products on idProduct = products.id
+                                  join orders o on o.id = orderdetail.idOrder
+                         where idOrder = "${idO}"
+                         group by id`
+            connection.connection.query(sql, (err, products) => {
+                if (err) {
+                    reject(err);
+                } else {
                     resolve(products);
                 }
             });

@@ -1,12 +1,15 @@
 const connection = require('../model/connection');
 const fs = require('fs');
 const qs = require('qs');
+const productService = require("./productService");
 connection.connecting();
+let idUser = null;
 
 class UserService {
 
     login(user, res) {
-        connection.connection.query(`SELECT *FROM users`, (err, results) => {
+        connection.connection.query(`SELECT *
+                                     FROM users`, (err, results) => {
             if (err) {
                 console.log(err);
             } else {
@@ -18,6 +21,7 @@ class UserService {
                     for (let i = 0; i < results.length; i++) {
                         if (user.name === results[i].name && user.password === results[i].password) {
                             check = true;
+                            idUser = results[i].id;
                             res.writeHead(301, {'location': '/user'});
                             res.end();
                         }
@@ -35,8 +39,13 @@ class UserService {
         });
     }
 
+    getIdUser() {
+        return idUser;
+    }
+
     register(newUser, res) {
-        connection.connection.query(`SELECT *FROM users`, function (err, results) {
+        connection.connection.query(`SELECT *
+                                     FROM users`, function (err, results) {
             if (err) {
                 console.log(err);
             } else {
@@ -68,6 +77,90 @@ class UserService {
             }
         });
     }
+
+    findProductById(idP) {
+        return new Promise((resolve, reject) => {
+            connection.connection.query(`select products.id, products.name, price
+                                         from orderdetail
+                                                  join products on idProduct = products.id
+                                         where idProduct = ${idP}
+                                         group by id`, (err, product) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(product);
+                }
+            });
+        })
+    }
+
+    deleteProduct(id) {
+        return new Promise((resolve, reject) => {
+            connection.connection.query(` delete
+                                          from orderdetail
+                                          where idProduct = ${id}`, (err, products) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Delete Success !!!');
+                    resolve(products);
+                }
+            });
+        })
+    }
+
+    getTotalPrice(idO) {
+        return new Promise((resolve, reject) => {
+            const sql = `select SUM(orderdetail.quantity * price) as total
+                         from orderdetail
+                                  join products p on p.id = orderdetail.idProduct
+                         where idOrder = "${idO}"`
+            connection.connection.query(sql, (err, total) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(total);
+                }
+            });
+        })
+
+    }
+
+    buyProduct(idO) {
+        return new Promise((resolve, reject) => {
+            connection.connection.query(`update orders
+                                         set status = true
+                                         where id = ${idO}`, (err, products) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Buy Success !!!');
+                    resolve(products);
+                }
+            });
+        })
+    }
+
+    deleteCart(idO) {
+        return new Promise((resolve, reject) => {
+            connection.connection.query(` delete
+                                          from orderdetail
+                                          where idOrder = ${idO};
+            delete
+            from orders
+            where id = ${idO}`, (err, products) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Delete Success !!!');
+                    resolve(products);
+                }
+            });
+        })
+    }
+
 }
+
+new UserService().getIdUser()
 
 module.exports = new UserService();
