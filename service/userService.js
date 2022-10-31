@@ -145,10 +145,11 @@ class UserService {
         return new Promise((resolve, reject) => {
             connection.connection.query(` delete
                                           from orderdetail
-                                          where idOrder = ${idO};
-            delete
-            from orders
-            where id = ${idO}`, (err, products) => {
+                                          where idOrder = ${idO}`);
+            connection.connection.query(`
+                delete
+                from orders
+                where id = ${idO}`, (err, products) => {
                 if (err) {
                     reject(err);
                 } else {
