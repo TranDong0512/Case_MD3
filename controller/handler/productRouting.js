@@ -117,10 +117,8 @@ class ProductRouting {
                 res.writeHead(301, {'location': '/admin/showAllProduct'});
                 res.end();
             });
-
         }
     }
-
     getCategory = async () => {
         let indexCategory = '';
         let products = await productService.getCategory();
@@ -216,7 +214,7 @@ class ProductRouting {
             })
         }
     }
-    userShowAll = (req, res)=> {
+    userShowAll = (req, res) => {
         let html = '';
         fs.readFile('./views/menu/user.html', "utf-8", async (err, userHtml) => {
             if (err) {

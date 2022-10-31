@@ -8,7 +8,7 @@ const router = {
     'admin/addProduct': productRouting.showAddProduct,
     'admin/editProduct': productRouting.showEditProduct,
     'admin/deleteProduct': productRouting.showDeleteProduct,
-    'user': productRouting.showAllProduct,
+    'user': productRouting.userShowAll,
     'user/findProductByName': productRouting.showFindProductByName,
     'user/findProductByPrice': productRouting.showFindProductByPrice,
     'user/findProductByCategory': productRouting.showFindProductByCategory,
