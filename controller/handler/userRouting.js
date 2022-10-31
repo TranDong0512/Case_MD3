@@ -3,6 +3,7 @@ const fs = require("fs");
 const qs = require("qs");
 const connection = require("../../model/connection");
 const productService = require("../../service/productService");
+const categoryService = require("../../service/userService")
 
 class UserRouting {
     login(req, res) {
@@ -152,6 +153,7 @@ class UserRouting {
             res.end();
         })
     }
+
 }
 
 module.exports = new UserRouting();

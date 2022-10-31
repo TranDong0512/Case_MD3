@@ -29,7 +29,7 @@ class UserService {
                     if (!check) {
                         fs.readFile('./views/user/login.html', "utf-8", (err, loginHtml) => {
                             res.writeHead(200, {'Content-Type': 'text/html'});
-                            loginHtml = loginHtml.replace('{notification}', `<p>Tài khoản hoặc Mật khẩu không đúng<br>Hãy nhập lại</p>`);
+                            loginHtml = loginHtml.replace('{notification}', `<p style="text-align: center; background-color: white">Tài khoản hoặc Mật khẩu không đúng<br>Hãy nhập lại</p>`);
                             res.write(loginHtml);
                             res.end();
                         });
@@ -55,7 +55,7 @@ class UserService {
                         check = true;
                         fs.readFile('./views/user/register.html', "utf-8", (err, registerHtml) => {
                             res.writeHead(200, {'Content-Type': 'text/html'});
-                            registerHtml = registerHtml.replace('{notification}', `<p>Tài khoản đã tồn tại<br>Hãy nhập lại</p>`);
+                            registerHtml = registerHtml.replace('{notification}', `<p style="text-align: center; background-color: white">Tài khoản đã tồn tại<br>Hãy nhập lại</p>`);
                             res.write(registerHtml);
                             res.end();
                         });
